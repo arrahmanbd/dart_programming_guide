@@ -1,5 +1,5 @@
 
-![Awesome ReadME](https://github.com/pottekkat/awesome-readme/raw/master/header.png)
+![Awesome ReadME](cover.png)
  
 # Dart Programming Guide
 
