@@ -66,7 +66,7 @@ Dart is a modern, object-oriented programming language developed by Google. It i
 [(Back to top)](#table-of-contents)
 
 # Basic Syntax
-Dart syntax is easy to understand and resembles many other C-style languages. It includes features such as variables, data types, operators, and comments. Refer to Basic Syntax for detailed information.
+Dart syntax is easy to understand and resembles many other C-style languages. It includes features such as variables, data types, operators, and comments. 
 
 # Variables and Data Types
 In Dart, variables are used to store data values. Dart supports various data types including integers, doubles, strings, booleans, lists, and maps. Learn more about Variables and Data Types.
@@ -226,7 +226,7 @@ void main() {
 ```
 
 # Functions
-Functions are a fundamental building block of Dart programming. They allow you to encapsulate code for reuse and modularity. Learn how to define and use functions in Dart in the Functions section. In dart, "main " function is the motther of your programme.
+Functions are a fundamental building block of Dart programming. They allow you to encapsulate code for reuse and modularity.In dart, "main " function is the mother of your programme. Learn how to define and use functions. 
 ```dart
 void main() {
   printPlanets("Earth", "Mars"); //3rd param is optional
@@ -328,7 +328,6 @@ Function taskToPerform() {       // Higher-Order Function
 	Function addNumbers = (int a, int b) => print(a + b);
 
   //closer
-
 	// Definition 1:
 	// A closure is a function that has access to the parent scope, even after the scope has closed.
 
@@ -344,7 +343,7 @@ Function taskToPerform() {       // Higher-Order Function
 ```
 
 # Classes and Objects
-Dart is an object-oriented programming language, which means it supports classes and objects. Classes are used to create objects with properties and methods. Explore Classes and Objects to understand how to work with them in Dart, Scroll bottom to [OOP Concepts](#oop-concepts).
+Dart is an object-oriented programming language, which means it supports classes and objects. Classes are used to create objects with properties and methods. Explore Classes and Objects to understand how to work with them in Dart, Scroll  to bottom and check [OOP Concepts](#oop-concepts).
 
 ```dart
 // 1. Callable class
