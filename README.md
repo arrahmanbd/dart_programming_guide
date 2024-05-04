@@ -19,19 +19,26 @@ Dart is a modern, object-oriented programming language developed by Google. It i
 - [Basic Information](#basic-information)
 - [Basic Syntax](#basic-syntax)
 - [Variables and Data Types](#variables-and-data-types)
+  - [Record DataType:](#record-datatype)
+    - [Returning Multiple value Using Record](#returning-multiple-value-using-record)
+    - [Using Record in Real world](#using-record-in-real-world)
 - [Control Flow Statements](#control-flow-statements)
 - [Functions](#functions)
+  - [More about functions:](#more-about-functions)
 - [Classes and Objects](#classes-and-objects)
 - [Exception Handling](#exception-handling)
+    - [Try Catch](#try-catch)
+    - [Exception](#exception)
 - [Asynchronous Programming](#asynchronous-programming)
 - [Libraries and Packages](#libraries-and-packages)
-- [Dart Collection](#dart-collection)
+- [Dart Collection \& Methods](#dart-collection--methods)
   - [List methods \[for\]:](#list-methods-for)
   - [Method \[for-in\]](#method-for-in)
   - [Method \[for-each\]](#method-for-each)
   - [Method \[for-in\]](#method-for-in-1)
   - [Method \[where in\]](#method-where-in)
   - [Method \[map\]](#method-map)
+  - [Future \[for-each\]](#future-for-each)
   - [Find the common](#find-the-common)
 - [Sum of a List](#sum-of-a-list)
 - [Sorting a List](#sorting-a-list)
@@ -40,9 +47,7 @@ Dart is a modern, object-oriented programming language developed by Google. It i
 - [String replacer](#string-replacer)
   - [Empty or null check](#empty-or-null-check)
 - [Object into Bytes:](#object-into-bytes)
-  - [decode](#decode)
-- [Try Catch](#try-catch)
-  - [Exception](#exception)
+  - [Decode](#decode)
 - [OOP Concepts](#oop-concepts)
   - [Object and Constractor](#object-and-constractor)
     - [Constructor:](#constructor)
@@ -66,26 +71,433 @@ Dart syntax is easy to understand and resembles many other C-style languages. It
 # Variables and Data Types
 In Dart, variables are used to store data values. Dart supports various data types including integers, doubles, strings, booleans, lists, and maps. Learn more about Variables and Data Types.
 
+```dart
+void main(List<String> arguments) {
+
+	// Numbers: int
+	int score = 23;
+	var count = 23;     // It is inferred as integer automatically by compiler
+	int hexValue = 0xEADEBAEE;
+
+	// Numbers: double
+	double percentage = 93.4;
+	var percent = 82.533;
+	double exponents = 1.42e5; 
+
+	// Strings
+	String name = "Henry";
+	var company = "Google";
+
+	// Boolean
+	bool isValid = true;
+	var isAlive = false;
+
+	print(score);
+	print(exponents);
+
+	// NOTE: All data types in Dart are Objects.
+	// Therefore, their initial value is by default 'null'
+  // String Interpolation : Use ["My name is $name"] instead of ["My name is " + name]
+	String name = "AR Rahman";
+
+	print("My name is $name");
+	print("The number of characters in String AR Rahman is ${name.length}");
+
+
+	int l = 20;
+	int b = 10;
+
+	print("The sum of $l and $b is ${l + b}");
+	print("The area of rectangle with length $l and breadth $b is ${l * b}");
+}
+```
+## Record DataType:
+Dart 2 provides you with some options for bundling multiple objects into a single value.
+Dart Record type that allows you to bundle multiple objects into a single value.
+```dart
+// the following defines a record with two values latitude and longitude:
+final location = (10.0, 20.0);
+//The fields of records may have a name to make it more clear
+final location = (lat: 10.0, lon: 20.0);
+//To annotate the type of the record in a variable declaration, you use the following:
+(double, double) location = (10.0, 20.0);
+//Also, you can name the positional fields in the record type annotation:
+(double lat, double lon) location = (10.0, 20.0);
+  final lat = location.$1;
+  final lon = location.$2;
+  print('($lat, $lon)');
+
+  //Record equality
+  final loc1 = (10.0, 20.0);
+  final loc2 = (10.0, 20.0);
+  final result = loc1 == loc2;
+  print(result); // true
+```
+### Returning Multiple value Using Record
+```dart
+void main() {
+  final result = minmax([5, 2, 3, 7, 0, -1]);
+  print(result);
+}
+
+(double?, double?) minmax(List<double> numbers) {
+  if (numbers.length == 0) {
+    return (null, null);
+  }
+
+  double min = numbers[0];
+  double max = numbers[0];
+
+  for (int i = 1; i < numbers.length; i++) {
+    if (numbers[i] < min) {
+      min = numbers[i];
+    }
+
+    if (numbers[i] > max) {
+      max = numbers[i];
+    }
+  }
+  return (min, max);
+}
+```
+### Using Record in Real world
+```dart
+import 'package:http/http.dart' as http;
+import 'todo.dart';
+
+Future<(Todo?, String)> fetchTodo(int id) async {
+  final uri = Uri(
+    scheme: 'https',
+    host: 'jsonplaceholder.typicode.com',
+    path: 'todos/$id',
+  );
+
+  try {
+    var response = await http.Client().get(uri);
+
+    // if not OK
+    if (response.statusCode != 200) {
+      return (
+        null,
+        'Failed to fetch todo: ${response.statusCode}, ${response.reasonPhrase}'
+      );
+    }
+
+    final todo = Todo.fromJson(response.body);
+    return (todo, 'Success');
+  } catch (e) {
+    return (null, 'Error to fetch todo: $e');
+  }
+}
+
+```
 # Control Flow Statements
 Control flow statements in Dart allow you to control the flow of your program execution. Dart supports if-else statements, switch statements, loops, and more. Check out Control Flow Statements for examples and explanations.
 
+```dart
+void main() {
+  //if else
+  var salary = 25000;
+
+  if (salary >= 25000) {
+    print("Conratulations");
+  } else {
+    print("Lololol");
+  }
+
+  String grade = 'A';
+
+//switch - applicable only for int and string
+
+  switch (grade) {
+    case 'A':
+      print("Excellent");
+      break;
+    case 'B':
+      print("Great");
+      break;
+    case 'C':
+      print("Good");
+      break;
+    default:
+      print("Invalid grade");
+  }
+}
+```
+
 # Functions
-Functions are a fundamental building block of Dart programming. They allow you to encapsulate code for reuse and modularity. Learn how to define and use functions in Dart in the Functions section.
+Functions are a fundamental building block of Dart programming. They allow you to encapsulate code for reuse and modularity. Learn how to define and use functions in Dart in the Functions section. In dart, "main " function is the motther of your programme.
+```dart
+void main() {
+  printPlanets("Earth", "Mars"); //3rd param is optional
+
+  print("");
+
+  printCities("Delhi", "Mumbai", "Goa");
+
+  print("");
+
+  printFruits("Apple");
+  print("The volume is: ${findVolume(lenghth: 5, breadth: 6, height: 5)}");
+}
+
+//1. Required params
+void printCities(String a, String b, String c) {
+  //we can define optional params by defining them in "[]", square brackets
+
+  print("Name is $a");
+  print("Name is $b");
+  print("Name is $c");
+}
+
+//2. Optional positional params
+void printPlanets(String a, String b, [String c]) {
+  //we can define optional params by defining them in "[]", square brackets
+
+  print("Name is $a");
+  print("Name is $b");
+  print("Name is $c");
+}
+
+void printFruits(String a, [String b, String c]) {
+  //multiple optional positional params
+
+  print("Name is $a");
+  print("Name is $b");
+  print("Name is $c");
+}
+int findVolume({int lenghth, int breadth, int height}) {
+  /**
+   * Named params: used to prevent errors if there are large no. of params
+   * - use "{}", curly brackets to define
+   */
+  return lenghth * breadth * height;
+}
+```
+## More about functions: 
+```dart
+
+// Objectives
+// 1. Higher-Order Function:
+// 2. Lambda function
+// 3. Closer
+// How to pass function as parameter?
+// How to return a function from another function?
+
+
+void main() {
+
+	// Example One: Passing Function to Higher-Order Function
+	Function addNumbers = (a, b) => print(a + b);
+	someOtherFunction("Hello", addNumbers);
+
+
+	// Example Two: Receiving Function from Higher-Order Function
+	var myFunc = taskToPerform();
+	print(myFunc(10));      // multiplyFour(10)         // number * 4       // 10 * 4       // OUTPUT: 40
+}
+
+
+
+// Example one: Accepts function as parameter
+void someOtherFunction(String message, Function myFunction) {       // Higher-Order Function
+
+	print(message);
+	myFunction(2, 4);       // addNumbers(2, 4)    // print(a + b);   // print(2 + 4)       // OUTPUT: 6
+}
+
+
+// Example two: Returns a function
+Function taskToPerform() {       // Higher-Order Function
+  //labda function/nameless function
+	Function multiplyFour = (int number) => number * 4;
+	return multiplyFour;
+}
+//More labda functions
+// Defining Lambda: 1st way
+	Function addTwoNumbers = (int a, int b) {
+		var sum = a + b;
+		print(sum);
+	};
+
+	var multiplyByFour = (int number) {
+		return number * 4;
+	};
+
+	// Defining Lambda: 2nd way: Function Expression: Using Short Hand Syntax or FAT Arrow ( '=>' )
+	Function addNumbers = (int a, int b) => print(a + b);
+
+  //closer
+
+	// Definition 1:
+	// A closure is a function that has access to the parent scope, even after the scope has closed.
+
+	String message = "Dar is good";
+
+	Function showMessage = () {
+		message = "Dart is awesome";
+		print(message);
+	};
+
+	showMessage();
+
+```
 
 # Classes and Objects
-Dart is an object-oriented programming language, which means it supports classes and objects. Classes are used to create objects with properties and methods. Explore Classes and Objects to understand how to work with them in Dart.
+Dart is an object-oriented programming language, which means it supports classes and objects. Classes are used to create objects with properties and methods. Explore Classes and Objects to understand how to work with them in Dart, Scroll bottom to [OOP Concepts](#oop-concepts).
+
+```dart
+// 1. Callable class
+// --> Class treated as Function.
+// --> Implement call() method
+
+void main() {
+
+	var personOne = Person();
+	var msg = personOne(25, "Peter");
+	print(msg);
+}
+
+class Person {
+	
+	String call(int age, String name) {
+		return "The name of the person is $name and age is $age";
+	}
+}
+
+// Objectives
+// 1. Interface class
+
+void main() {
+
+	var tv = Television();
+	tv.volumeUp();
+	tv.volumeDown();
+}
+
+class Remote {
+
+	void volumeUp() {
+		print("up");
+	}
+
+	void volumeDown() {
+		print("down");
+	}
+}
+
+class AnotherClass {
+
+	void justAnotherMethod(){
+		// Code
+	}
+
+}
+
+// Here Remote and AnotherClass acts as Interface
+class Television implements Remote, AnotherClass {
+
+	void volumeUp() {
+//		super.volumeUp();       // Not allowed to call super while implementing a class as Interface
+		print("uppp");
+	}
+
+	void volumeDown() {
+		print("downn");
+	}
+
+	void justAnotherMethod() {
+		print("Some code");
+	}
+}
+```
 
 # Exception Handling
 Exception handling is crucial for writing robust and error-tolerant code. Dart provides try-catch-finally blocks to handle exceptions gracefully. Read more about Exception Handling to learn how to handle errors in Dart programs.
 
+### Try Catch
+
+```dart
+List<int> numbers = [1, 2, 3, 4, 5, 0, 6]; // A list of numbers
+  int product = 1; // A variable to store the product
+  try {
+    // Loop through the list of numbers
+    for (int i = 0; i < numbers.length; i++) {
+      // If the number is 0, throw an exception
+      if (numbers[i] == 0) {
+        throw Exception('The number cannot be zero.');
+      }
+
+      // Multiply the number with the current product
+      product *= numbers[i];
+    }
+  } catch (e) {
+    // Handle any errors or exceptions
+    debugPrint('An error occurred while looping through the list: $e');
+  } finally {
+    // Print the product of the numbers in the finally block
+    debugPrint(
+        'The product of the numbers before the exception occurred (if any) is: $product');
+  }
+  ```
+
+### Exception
+```dart
+String input = '-10'; // A string that can be parsed into an integer
+  int number;
+  try {
+    number = int.parse(input); // This might throw a FormatException
+
+    debugPrint('The number is $number.');
+
+    if (number < 0) {
+      throw ArgumentError(
+          'The number cannot be negative.'); // This might throw an ArgumentError
+    }
+  } on FormatException catch (e) {
+    debugPrint('The input is not a valid number: $e');
+  } on ArgumentError catch (e) {
+    debugPrint('The input is not acceptable: $e');
+  }
+  ```
+
 # Asynchronous Programming
 Dart offers built-in support for asynchronous programming, which is essential for handling operations such as I/O, networking, and timers without blocking the main thread. Dive into Asynchronous Programming to understand Dart's asynchronous features.
+```dart
+import 'dart:async';
+
+void main() {
+  print('Start of main');
+  
+  // Simulating an asynchronous operation that returns a Future after 2 seconds
+  Future<String> delayedResult = simulateAsyncOperation();
+  
+  // Executing some other synchronous code while waiting for the Future to complete
+  print('Executing some other code while waiting...');
+  
+  // Handling the result of the Future when it completes
+  delayedResult.then((result) {
+    print('Result from asynchronous operation: $result');
+  }).catchError((error) {
+    print('Error occurred: $error');
+  });
+  
+  print('End of main');
+}
+
+Future<String> simulateAsyncOperation() {
+  return Future.delayed(Duration(seconds: 2), () {
+    return 'Async operation completed!';
+  });
+}
+
+```
 
 # Libraries and Packages
-Dart comes with a rich set of standard libraries for common programming tasks. Additionally, you can use third-party packages from pub.dev to extend Dart's functionality. Discover more about Libraries and Packages in Dart.
+Dart comes with a rich set of standard libraries for common programming tasks. Additionally, you can use third-party packages from [pub.dev](https://pub.dev) to extend Dart's functionality. Discover more about Libraries and Packages in Dart.
 
  
-# Dart Collection
+# Dart Collection & Methods
 [(Back to top)](#table-of-contents)
 
 ## List methods [for]:
@@ -181,6 +593,7 @@ List<String> names = ["John Doe", "Foo Bar", "AR Rahman"];
     print(uppercaseNames);
   }
   ```
+## Future [for-each]
 ```dart
 final items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   await Future.forEach(items, (item) async {
@@ -356,7 +769,7 @@ bool validateInput(String? input) {
     print(bytesList2);
   }
 ```
-## decode
+## Decode
 ```dart
 final map = {'key1': 'foo bar', 'key2': 123, 'key3': 'more'};
 
@@ -368,51 +781,7 @@ final map = {'key1': 'foo bar', 'key2': 123, 'key3': 'more'};
     print(bytesMap);
   }
 ```
-# Try Catch
 
-```dart
-List<int> numbers = [1, 2, 3, 4, 5, 0, 6]; // A list of numbers
-  int product = 1; // A variable to store the product
-  try {
-    // Loop through the list of numbers
-    for (int i = 0; i < numbers.length; i++) {
-      // If the number is 0, throw an exception
-      if (numbers[i] == 0) {
-        throw Exception('The number cannot be zero.');
-      }
-
-      // Multiply the number with the current product
-      product *= numbers[i];
-    }
-  } catch (e) {
-    // Handle any errors or exceptions
-    debugPrint('An error occurred while looping through the list: $e');
-  } finally {
-    // Print the product of the numbers in the finally block
-    debugPrint(
-        'The product of the numbers before the exception occurred (if any) is: $product');
-  }
-  ```
-
-## Exception
-```dart
-String input = '-10'; // A string that can be parsed into an integer
-  int number;
-  try {
-    number = int.parse(input); // This might throw a FormatException
-
-    debugPrint('The number is $number.');
-
-    if (number < 0) {
-      throw ArgumentError(
-          'The number cannot be negative.'); // This might throw an ArgumentError
-    }
-  } on FormatException catch (e) {
-    debugPrint('The input is not a valid number: $e');
-  } on ArgumentError catch (e) {
-    debugPrint('The input is not acceptable: $e');
-  }
-  ```
 # OOP Concepts
 ## Object and Constractor
  ### Constructor: 
