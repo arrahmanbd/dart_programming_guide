@@ -54,6 +54,7 @@ Dart is a modern, object-oriented programming language developed by Google. It i
   - [Polymorphism:](#polymorphism)
   - [OOP Example](#oop-example)
   - [Real life example](#real-life-example)
+  - [Clean Concept](#clean-concept)
 - [Contribute](#contribute)
 
 # Basic Information
@@ -610,7 +611,94 @@ void main() {
 }
 
 ```
+## Clean Concept
+```dart
+// Entities: Define domain objects representing individual students
 
+class Student {
+  final String name;
+  final int grade;
+
+  Student(this.name, this.grade);
+}
+
+// Use Cases: Define application-specific business logic
+
+abstract class AddStudentUseCase {
+  void execute(String name, int grade);
+}
+
+abstract class PrintStudentsUseCase {
+  void execute();
+}
+
+class AddStudentInteractor implements AddStudentUseCase {
+  final StudentRepository repository;
+
+  AddStudentInteractor(this.repository);
+
+  @override
+  void execute(String name, int grade) {
+    repository.addStudent(Student(name, grade));
+  }
+}
+
+class PrintStudentsInteractor implements PrintStudentsUseCase {
+  final StudentRepository repository;
+
+  PrintStudentsInteractor(this.repository);
+
+  @override
+  void execute() {
+    print("Students:");
+    for (var student in repository.getAllStudents()) {
+      print("- ${student.name}: Grade ${student.grade}");
+    }
+  }
+}
+
+// Data Access: Define interfaces for data storage
+
+abstract class StudentRepository {
+  void addStudent(Student student);
+  List<Student> getAllStudents();
+}
+
+// Concrete implementation of StudentRepository using in-memory storage
+class InMemoryStudentRepository implements StudentRepository {
+  List<Student> _studentList = [];
+
+  @override
+  void addStudent(Student student) {
+    _studentList.add(student);
+  }
+
+  @override
+  List<Student> getAllStudents() {
+    return List.from(_studentList); // Return a copy to prevent direct modification
+  }
+}
+
+// Presentation: Wiring everything together
+
+void main() {
+  // Initialize StudentRepository with the concrete implementation
+  var studentRepository = InMemoryStudentRepository();
+
+  // Initialize use cases
+  var addStudentUseCase = AddStudentInteractor(studentRepository);
+  var printStudentsUseCase = PrintStudentsInteractor(studentRepository);
+
+  // Add some students
+  addStudentUseCase.execute("Alice", 90);
+  addStudentUseCase.execute("Bob", 85);
+  addStudentUseCase.execute("Charlie", 95);
+
+  // Print students
+  printStudentsUseCase.execute();
+}
+
+```
 # Contribute
 [(Back to top)](#table-of-contents)
 
