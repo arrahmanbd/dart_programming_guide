@@ -1,7 +1,7 @@
 
 ![Awesome ReadME](cover.png)
  
-# Dart Programming Guide
+# Dart Programming Guide ✨
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)
 [![GitHub last commit](https://img.shields.io/github/last-commit/navendu-pottekkat/awesome-readme)](https://img.shields.io/github/last-commit/navendu-pottekkat/awesome-readme)
@@ -12,10 +12,10 @@
 Dart is a modern, object-oriented programming language developed by Google. It is known for its simplicity, efficiency, and versatility. Dart is primarily used for building web, mobile, and server-side applications.
 
  
-## Table of Contents
+## Table of Contents 💡
 
-- [Dart Programming Guide](#dart-programming-guide)
-  - [Table of Contents](#table-of-contents)
+- [Dart Programming Guide ✨](#dart-programming-guide-)
+  - [Table of Contents 💡](#table-of-contents-)
 - [Basic Information](#basic-information)
 - [Basic Syntax](#basic-syntax)
 - [Variables and Data Types](#variables-and-data-types)
@@ -61,6 +61,8 @@ Dart is a modern, object-oriented programming language developed by Google. It i
   - [Real life example](#real-life-example)
   - [Clean Concept](#clean-concept)
 - [Contribute](#contribute)
+  - [🚀  Follow](#--follow)
+  - [Badges](#badges)
 
 # Basic Information
 [(Back to top)](#table-of-contents)
@@ -1068,9 +1070,18 @@ void main() {
 
 ```
 # Contribute
-[(Back to top)](#table-of-contents)
+Together, we can achieve great things and create positive change in our community and beyond.So,If you're interested in contributing to this project, you are warmly welcomed! 🎁
 
-Contributions are welcome
+## 🚀  Follow
+[![LinkedIn](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/arrahmanbd)
+[![GitHUb](https://img.shields.io/badge/Github-22272e?style=for-the-badge&logo=github&logoColor=white)](https://www.github.com/arrahmanbd)
+[![Facebook](https://img.shields.io/badge/Facebook-0A66C2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/arrahman.dev)
+
+
+## Badges
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
 
 
 
