@@ -43,6 +43,17 @@ Dart is a modern, object-oriented programming language developed by Google. It i
   - [decode](#decode)
 - [Try Catch](#try-catch)
   - [Exception](#exception)
+- [OOP Concepts](#oop-concepts)
+  - [Object and Constractor](#object-and-constractor)
+    - [Constructor:](#constructor)
+    - [Parameterized Constructor:](#parameterized-constructor)
+    - [Static Method:](#static-method)
+    - [Getter and Setter:](#getter-and-setter)
+  - [Abstraction:](#abstraction)
+  - [Inheritance:](#inheritance)
+  - [Polymorphism:](#polymorphism)
+  - [OOP Example](#oop-example)
+  - [Real life example](#real-life-example)
 - [Contribute](#contribute)
 
 # Basic Information
@@ -401,6 +412,205 @@ String input = '-10'; // A string that can be parsed into an integer
     debugPrint('The input is not acceptable: $e');
   }
   ```
+# OOP Concepts
+## Object and Constractor
+ ### Constructor: 
+ In Dart, a constructor is a special method used for initializing objects of a class. It has the same name as the class and no return type. Dart supports several types of constructors:
+Default Constructor: This is provided by Dart if you don't declare any constructor explicitly. It initializes instance variables with their default values.
+### Parameterized Constructor: 
+Allows you to initialize instance variables with custom values when creating an object.
+Named Constructor: Dart allows you to declare multiple constructors with different names. These constructors can have different parameter lists and provide alternative ways to create objects.
+Example of a constructor in Dart:
+```dart
+class Person {
+  String name;
+  int age;
+  
+  // Default Constructor
+  Person(this.name, this.age);
+  
+  // Named Constructor
+  Person.guest() {
+    name = 'Guest';
+    age = 0;
+  }
+}
+```
+### Static Method: 
+A static method in Dart belongs to the class itself rather than to any instance of the class. It can be called without creating an instance of the class. Static methods are defined using the static keyword.Example of a static method in Dart:
+```dart
+class MathUtils {
+  static int add(int a, int b) {
+    return a + b;
+  }
+}
+
+// Calling the static method
+var result = MathUtils.add(5, 3);
+```
+### Getter and Setter: 
+Getters and setters are used to control access to the private instance variables of a class. Getters retrieve the value of a variable, and setters modify the value of a variable. In Dart, getters and setters are defined using the get and set keywords respectively.Example of a getter and setter in Dart:
+```dart
+class Rectangle {
+  double _width;
+  double _height;
+  
+  // Getter for width
+  double get width => _width;
+  
+  // Setter for width
+  set width(double value) {
+    if (value > 0) {
+      _width = value;
+    }
+  }
+  
+  // Getter for height
+  double get height => _height;
+  
+  // Setter for height
+  set height(double value) {
+    if (value > 0) {
+      _height = value;
+    }
+  }
+}
+```
+## Abstraction: 
+Abstraction is the process of hiding the implementation details and showing only the essential features of the object. In Dart, abstraction can be achieved using abstract classes and methods.
+## Inheritance: 
+Inheritance is a mechanism where a new class inherits properties and behaviors from an existing class. This promotes code reusability and establishes a relationship between classes.
+## Polymorphism:
+Polymorphism allows objects of different classes to be treated as objects of a common superclass. In Dart, polymorphism is achieved through method overriding.
+Here's an example that illustrates these concepts:
+
+## OOP Example
+```dart
+// Abstraction: Define an abstract class
+abstract class Shape {
+  // Abstract method
+  double calculateArea();
+}
+
+// Inheritance: Create subclasses that inherit from Shape
+class Circle extends Shape {
+  double radius;
+
+  Circle(this.radius);
+
+  @override
+  double calculateArea() {
+    return 3.14 * radius * radius;
+  }
+}
+
+class Rectangle extends Shape {
+  double width;
+  double height;
+
+  Rectangle(this.width, this.height);
+
+  @override
+  double calculateArea() {
+    return width * height;
+  }
+}
+
+// Polymorphism: Using objects of different classes through a common interface
+void printArea(Shape shape) {
+  print('Area of the shape: ${shape.calculateArea()}');
+}
+
+void main() {
+  // Create objects of different shapes
+  Circle circle = Circle(5);
+  Rectangle rectangle = Rectangle(4, 6);
+
+  // Print area of each shape
+  printArea(circle); // Polymorphism: Circle treated as a Shape
+  printArea(rectangle); // Polymorphism: Rectangle treated as a Shape
+}
+
+```
+## Real life example
+```dart
+// Use Case: Student Grades
+
+// Define the Student class representing individual students
+class Student {
+  final String name;
+  final int grade;
+
+  Student(this.name, this.grade);
+}
+
+// Abstract class representing a student repository
+abstract class StudentRepository {
+  void addStudent(Student student);
+  List<Student> getAllStudents();
+}
+
+// Concrete implementation of StudentRepository using in-memory storage
+class InMemoryStudentRepository implements StudentRepository {
+  List<Student> _studentList = [];
+
+  @override
+  void addStudent(Student student) {
+    _studentList.add(student);
+  }
+
+  @override
+  List<Student> getAllStudents() {
+    return List.from(_studentList); // Return a copy to prevent direct modification
+  }
+}
+
+// Use Case: AddStudent - Represents the use case of adding a new student
+class AddStudent {
+  final StudentRepository _repository;
+
+  AddStudent(this._repository);
+
+  // Function to execute the use case
+  void execute(String name, int grade) {
+    _repository.addStudent(Student(name, grade));
+  }
+}
+
+// Use Case: PrintStudents - Represents the use case of printing all students
+class PrintStudents {
+  final StudentRepository _repository;
+
+  PrintStudents(this._repository);
+
+  // Function to execute the use case
+  void execute() {
+    print("Students:");
+    for (var student in _repository.getAllStudents()) {
+      print("- ${student.name}: Grade ${student.grade}");
+    }
+  }
+}
+
+void main() {
+  // Initialize StudentRepository with the concrete implementation
+  var studentRepository = InMemoryStudentRepository();
+
+  // Use cases
+  var addStudent = AddStudent(studentRepository);
+  var printStudents = PrintStudents(studentRepository);
+
+  // Add some students
+  addStudent.execute("Alice", 90);
+  addStudent.execute("Bob", 85);
+  addStudent.execute("Charlie", 95);
+
+  // Print students
+  printStudents.execute();
+}
+
+```
+
 # Contribute
 [(Back to top)](#table-of-contents)
 
